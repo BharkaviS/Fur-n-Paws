@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+{% include 'blog/base.html' %}
+<head>
+	<title>ListView</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <!--<div class="container-fluids">
+	<div class="row-10">-->
+        <div class="row">
+        
+	{% for object in object_list %}
+    <div class="col-sm-3">
+    
+	{% include 'blog/listinline1.html'  with blog_post=object %}
+    
+    
+	
+	{% endfor %}
+</div>
+</div>
+
+	<div class="pagination">
+    <span class="step-links">
+        {% if object_list.has_previous %}
+            <a class="btn btn-info" href="?page=1">&laquo; first</a>
+            <a class="btn btn-info" href="?page={{ object_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+        </span>
+
+        {% if object_list.has_next %}
+            <a class="btn btn-info" href="?page={{ object_list.next_page_number }}">next</a>
+            <a class="btn btn-info" href="?page={{ object_list.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>THe front page!</title>
+		<link rel="stylesheet" href="style.css">
+		<link href="https://fonts.googleapis.com/css?family=Courgette&display=swap" rel="stylesheet">
+		<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+		<link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+		<style>
+			body{
+background-color:black;
+}
+* {
+  box-sizing: border-box;
+}
+h1{
+font-size:50px;
+  font-family: 'Courgette', cursive;
+  margin-top:0px;
+  margin-bottom:0px;
+  text-align:center;
+  color:white;
+  padding:0px;
+}
+html{
+  height:100%;
+  /*background: linear-gradient(navy,black);*/
+}
+a{
+  text-decoration: none;
+  color:#000;
+}
+.navbar {
+
+  width: 100%;
+  margin:0px;
+  overflow: auto;
+}
+@keyframes bounce {
+  0%, 20%, 60%, 100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  40% {
+    -webkit-transform: translateY(-20px);
+    transform: translateY(-20px);
+  }
+
+  80% {
+    -webkit-transform: translateY(-10px);
+    transform: translateY(-10px);
+  }
+}
+span{
+  float:right;
+ }
+
+
+.navbar a {
+  float: left;
+  color: white;
+  margin:20px;
+  text-decoration: none;
+  font-size: 30px;
+
+}
+
+.navbar a:hover {
+    animation: bounce 1s
+}
+
+@media screen and (max-width: 500px) {
+  .navbar a {
+    float: none;
+    display: block;
+  }
+}
+
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+  /*height:500px;*/
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+
+}
+.container {
+  position: relative;
+  width: 50%;
+  height:100%;
+
+}
+
+.image {
+  /*display: block;*/
+  width: 200%;
+  height:200%;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background-color: 00FFFF;
+  overflow: hidden;
+  width: 100%;
+  text-decoration:none;
+  height:0px;
+  transition: .5s ease;
+}
+
+.container:hover .overlay {
+  bottom: 0px;
+  height: 100%;
+}
+
+.text {
+  color: #000000;
+  font-size: 30px;
+  font-family: 'Pacifico', cursive;
+  text-decoration:none;
+  position: absolute;
+  top:50%;
+  left: 50%;
+
+  color:black;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}</style>
+	</head>
+	<body>
+		<h1>Welcome to Fur and Paws</h1>
+		<div class="navbar">
+				<a class="active" href="www.google.com"><i class="fa fa-fw fa-paw"></i>Home</a>
+				<a href="{% url 'buyer' %}"><i class="fa fa-fw fa-cart-plus"></i>Shop</a>
+				<a href="{% url 'blog-new' %}"><i class="fas fa-dog"></i>Dog Walker</a>
+				<span>
+          {% if user.is_authenticated %}
+					<a href="{% url 'logout' %}"><i class="fa fa-fw fa-user"></i>Logout</a>
+					<a href="{% url 'profile' %}"><i class="fa fa-fw fa-rocket"></i>Profile</a>
+          {% else %}
+          <a href="{% url 'login' %}"><i class="fa fa-fw fa-user"></i>Login</a>
+          <a href="{% url 'register' %}"><i class="fa fa-fw fa-rocket"></i>SignUp</a>
+          {% endif %}
+				</span>
+			</div>
+		<div class = "row">
+			<div class = "column">
+			<div class="container">
+				<img src="https://c4.wallpaperflare.com/wallpaper/297/552/845/dog-butterfly-wallpaper-preview.jpg" class="image" style="width:200% height:200" >
+				<div class="overlay">
+				<div class="text">
+					<a  href="www.google.com"><i class='fas fa-paw'></i>Take your friend for a little walk!</a>
+				</div>
+				</div>
+			</div>
+			</div>
+			<div class="column">
+			<div class = "container">
+				<img src = "https://images.pexels.com/photos/1564506/pexels-photo-1564506.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" style="width:200%" class="image">
+				<div class="overlay">
+				<div class="text">
+					<a  href = "www.google.com"><i class='fas fa-dog'></i>Want to buy something for your furry mate!!?</a>
+				</div>
+				</div>
+			</div>
+			</div>
+			<div class="column">
+			<div class="container">
+				<img src = "https://s1.1zoom.me/b6359/254/Dogs_Autumn_Welsh_Corgi_Foliage_516487_1080x1920.jpg" style="width:200%" class="image">
+				<div class="overlay">
+				<div class="text">
+					<a class = "text"href="www.google.com">Let the world see how beautiful your doggo is!</a>
+				</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</body>
+</html>

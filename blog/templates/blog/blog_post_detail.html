@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+{% include 'blog/base.html' %}
+{% load crispy_forms_tags %}
+<html>
+
+<head>
+	<title></title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    .mySlides {display:none;}
+</style>
+
+</head>
+<body>
+    <div class="w3-content" style="max-width:800px">
+    <!--<div class="col-12 col-md-6 mx-auto">
+    <div class="container-fluid ">
+    <div class="card {% if not blog_post.publish_Date %} border border-warning bg-light text-dark {% endif %}">
+    <div class="card-body">-->
+        {% if blog_post.image %}
+            <img class="mySlides" src="{{ blog_post.image.url }}" style="width:100%"/>
+            {% endif %}
+        {% if blog_post.image2 %}
+            <img class="mySlides" src="{{ blog_post.image2.url }}" style="width:100%"/>
+        {% endif %}
+        {% if blog_post.image3 %}
+            <img class="mySlides" src="{{ blog_post.image3.url }}" style="width:100%"/>
+        {% endif %}
+        </div>
+        <div class="w3-center">
+            <div class="w3-section">
+        <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+        <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+		{% include 'blog/listinline.html' with blog_post=object detail=True %}
+		{% if request.user.is_authenticated %}
+		{% if request.user == object.shop_name %}
+		<div class="container">
+		<a class="btn btn-warning" href="{{ object.get_edit_url }}">Edit</a>
+		<a class="btn btn-danger" href="{{ object.get_delete_url }}">Delete</a>
+		{% endif %}
+		{% endif %}
+		<div class="col-12 col-md-6 mx-auto">
+		<div class="container-fluid ">
+		<div class="card {% if not blog_post.publish_Date %} border bg-light text-dark {% endif %}">
+			<blockquote>
+        <p class='lead'>Comments</p>
+        {% if request.user.is_authenticated %}
+        <form method="POST" action="."> {% csrf_token %}
+            {{ comment_form|crispy }}
+            <input type='submit' value='Post comment' class='btn btn-default'>
+        </form>
+        {% else %}
+        <p>You must login to comment </p>
+        {% endif %}
+        <hr/>
+        {% for comment in comments %}
+
+        <blockquote>
+          <p>{{ comment.content }}</p>
+          <footer>via {{ comment.user }} | {{ comment.timestamp|timesince }} ago | {% if comment.children.count > 0 %}{{ comment.children.count }} Comment{% if comment.children.count > 1 %}s{% endif %} | {% endif %} <a class='comment-reply-btn' href='#'>Reply</a> | <a class='' href='{{ comment.get_absolute_url }}'>Thread</a></footer>
+          <div class='comment-reply'>
+              {% for child_comment in comment.children %}
+                <blockquote>
+                <p>{{ child_comment.content }}</p>
+                <footer>via {{ child_comment.user }} | {{ child_comment.timestamp|timesince }} ago</footer>
+                </blockquote>
+             {% endfor %}
+             {% if request.user.is_authenticated %}
+            <form method="POST" action="."> {% csrf_token %}
+                {{ comment_form|crispy }}
+                <input type='hidden' name='parent_id' value='{{ comment.id }}'>
+                <input type='submit' value='Reply' class='btn btn-default'>
+            </form>
+            {% else %}
+        <p>You must login to comment </p>
+        {% endif %}
+        </div>
+
+        </blockquote>
+
+        <hr/>
+        {% endfor %}
+    </div>
+</div>
+</div>
+<script>
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function currentDiv(n) {
+  showDivs(slideIndex = n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  if (n > x.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" w3-red", "");
+  }
+  x[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " w3-red";
+}
+</script>
+
+</body>
+</html>

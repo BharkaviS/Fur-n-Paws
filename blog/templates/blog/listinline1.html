@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+      <div class="text-center">
+         <img class="img-thumbnail" src="{{ blog_post.image.url }}" style="width:100%" />
+          <div class="caption">
+            <div class="card-body">
+            <p><h5 class='card-title'>{{ blog_post.product_name }}</h5></p>
+            <large style="color:#FF0000">Min.Offer:{{ blog_post.MinOffer}}%</large>
+
+                <h4>₹ {{ blog_post.price }}</h4>
+                 {% if not detail %}
+                <a class="btn btn-success" href="{{ blog_post.get_absolute_url }}">View</a>
+            {% endif %}
+                </div>
+          </div>
+        </div>
+      </div>
+        </a>
+      
+<!--rounded mx-auto d-block-->
